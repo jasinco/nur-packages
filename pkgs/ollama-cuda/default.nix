@@ -64,6 +64,7 @@ goBuild rec {
     export EXTRA_CCFLAGS="-I/usr/include -I${cudaToolkit}/include -I/include"
     export CUDATOOLKITDIR=${cudaToolkit}
     export OLLAMA_CUSTOM_CPU_DEFS="-DGGML_CUDA=ON"
+    export C_INCLUDE_PATH="/usr/include:${cudaToolkit}/include:/include"
     go generate ./...
   '';
 
