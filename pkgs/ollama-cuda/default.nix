@@ -63,6 +63,7 @@ goBuild rec {
     find ./llm/patches/ -type f -name "*.diff" -exec bash -c "patch -p1 -d ./llm/llama.cpp < \"{}\"" \;
     export EXTRA_CCFLAGS="-I/usr/include -I${cudaToolkit}/include -I/include"
     export CUDATOOLKITDIR=${cudaToolkit}
+    export OLLAMA_CUSTOM_CPU_DEFS="-DGGML_CUDA=ON"
     go generate ./...
   '';
 
