@@ -60,7 +60,7 @@ goBuild rec {
     export OLLAMA_SKIP_PATCHING=true
     export CUDAToolkit_ROOT=${cudaToolkit}
     find ./llm/patches/ -type f -name "*.diff" -exec bash -c "patch -p1 -d ./llm/llama.cpp < \"{}\"" \;
-    export EXTRA_CCFLAGS="-I/usr/include -I${cudaToolkit}/include"
+    export EXTRA_CCFLAGS="-I/usr/include -I${cudaToolkit}/include -I/include"
     export CUDATOOLKITDIR=${cudaToolkit}
     go generate ./...
   '';
