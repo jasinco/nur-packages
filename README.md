@@ -1,8 +1,7 @@
 # Jasinco's NUR package
 
-**It contains the package I wrapped**
+## It contains the package I wrapped
 
-<!-- Remove this if you don't use github actions -->
 ![Build and populate cache](https://github.com/jasinco/nur-packages/workflows/Build%20and%20populate%20cache/badge.svg)
 
 <!--
