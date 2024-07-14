@@ -13,6 +13,7 @@
   linuxPackages,
   ollama,
   testers,
+  nixosTests,
   ...
 }:
 let
@@ -95,7 +96,6 @@ goBuild rec {
   ];
   passthru.tests = {
     service = nixosTests.ollama;
-    cuda = pkgs.ollama.override { acceleration = "cuda"; };
     version = testers.testVersion {
       inherit version;
       package = ollama;
