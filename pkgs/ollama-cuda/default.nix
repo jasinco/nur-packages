@@ -68,7 +68,9 @@ goBuild rec {
     "-w"
     "-X=github.com/ollama/ollama/version.Version=${version}"
     "-X=github.com/ollama/ollama/server.mode=release"
-    "-L ${cudaToolkit}/lib -L ${linuxPackages.nvidia_x11}/lib -L /lib"
+    "-L ${cudaToolkit}/lib"
+    "-L ${linuxPackages.nvidia_x11}/lib"
+    "-L /lib"
   ];
   meta = {
     description = "Get up and running with large language models locally";
