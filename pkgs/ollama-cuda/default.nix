@@ -1,4 +1,20 @@
-{ lib,stdenv, pkgs, buildGoModule,linkFarm, makeWrapper, overrideCC,cmake, gcc12, cudaPackages, linuxPackages ,ollama, ...}:
+# with import <nixpkgs> { };
+{
+  lib,
+  stdenv,
+  pkgs,
+  buildGoModule,
+  linkFarm,
+  makeWrapper,
+  overrideCC,
+  cmake,
+  gcc12,
+  cudaPackages,
+  linuxPackages,
+  ollama,
+  testers,
+  ...
+}:
 let
   version = "0.2.3";
   src = builtins.fetchGit {
@@ -15,7 +31,12 @@ let
       cudaPackages.cuda_cudart
       cudaPackages.cuda_cudart.static
     ];
-    pathsToLink = [ "/share" "/bin" "/include" "/lib"];
+    pathsToLink = [
+      "/share"
+      "/bin"
+      "/include"
+      "/lib"
+    ];
   };
   runtimeLibs = [ linuxPackages.nvidia_x11 ];
   inherit (lib) licenses platforms maintainers;
@@ -72,6 +93,14 @@ goBuild rec {
     "-L ${linuxPackages.nvidia_x11}/lib"
     "-L /lib"
   ];
+  passthru.tests = {
+    service = nixosTests.ollama;
+    cuda = pkgs.ollama.override { acceleration = "cuda"; };
+    version = testers.testVersion {
+      inherit version;
+      package = ollama;
+    };
+  };
   meta = {
     description = "Get up and running with large language models locally";
     homepage = "https://github.com/ollama/ollama";
@@ -82,4 +111,3 @@ goBuild rec {
     maintainers = with maintainers; [ jasinco ];
   };
 }
-
